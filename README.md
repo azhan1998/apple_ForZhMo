@@ -7,7 +7,7 @@
 * 未做实际测试
 * 仅用于澳门iphone13预约
 * 修改model/area.go  services/listen.go
-* 
+* thanks @hteen
 
 #### 注意
 * 截止今日(2021-09-19)还无法预约, 所以13系列未做实际测试
@@ -72,6 +72,4 @@ fyne-cross windows
 选择到店时间，填写身份证号
 ![选择到店时间，填写身份证号](./images/2.png)
 
-## 一杯卡布奇诺 ☕️
 
-<img src='https://tva1.sinaimg.cn/large/0081Kckwly1gls6d2nnicj30i00pcq9i.jpg' width='200px'/>
