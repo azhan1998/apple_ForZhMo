@@ -8,6 +8,7 @@
 * 仅用于澳门iphone13预约
 * 修改model/area.go  services/listen.go
 * thanks @hteen
+* thanks && modify https://github.com/hteen/apple-store-helper
 
 #### 注意
 * 截止今日(2021-09-19)还无法预约, 所以13系列未做实际测试
