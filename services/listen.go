@@ -103,7 +103,6 @@ func (s *listenService) Run() {
 
 	go func() {
 		for {
-			// if stats, ok := s.Status.Get(); ok == nil && stats == Running && len(s.items) > 0 {
 			if stats, ok := s.Status.Get(); ok == nil && stats == Running && len(s.items) > 0 {
 
 				// skus := s.getSkus()
