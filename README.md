@@ -4,16 +4,14 @@
 重构, 升级 [fyne](https://github.com/fyne-io/fyne) 至 2.0, 写起来的确比 1.0 舒服得多
 
 ## azhan info
-* 未做实际测试
+* 修改版本更多的意义在于___库存监控
+* 2021.10.8_16:00pm, 完成了修复和测试
 * 仅用于澳门iphone13预约
 * 修改model/area.go  services/listen.go
 * thanks @hteen
 * thanks && modify https://github.com/hteen/apple-store-helper
 
 #### 注意
-* 截止今日(2021-09-19)还无法预约, 所以13系列未做实际测试
-* 库存接口已经有了(如果后面Apple不改的话)
-* 目前仅有中国大陆, 澳门暂时没库存接口(后面有了再更新)
 * 库存查询间隔由 1秒 调整为 500毫秒
 
 - - -
