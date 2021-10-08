@@ -4,6 +4,10 @@ import (
 	"apple-store-helper/model"
 	"errors"
 	"fmt"
+	"os/exec"
+	"runtime"
+	"time"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/dialog"
@@ -12,9 +16,6 @@ import (
 	"github.com/parnurzeal/gorequest"
 	"github.com/thoas/go-funk"
 	"github.com/tidwall/gjson"
-	"os/exec"
-	"runtime"
-	"time"
 )
 
 const (
@@ -27,18 +28,19 @@ const (
 )
 
 var Listen = listenService{
-	items:    map[string]ListenItem{},
-	Status:   binding.NewString(),
-	Area:     model.Areas[0],
-	Logs:     widget.NewLabel(""),
+	items:  map[string]ListenItem{},
+	Status: binding.NewString(),
+	Area:   model.Areas[0],
+	Logs:   widget.NewLabel(""),
 }
 
 type listenService struct {
-	items    map[string]ListenItem
-	Status   binding.String
-	Area     model.Area
-	Window   fyne.Window
-	Logs     *widget.Label
+	items  map[string]ListenItem
+	Status binding.String
+	Area   model.Area
+	Window fyne.Window
+	Logs   *widget.Label
+	varfi  string
 }
 
 type ListenItem struct {
@@ -101,16 +103,25 @@ func (s *listenService) Run() {
 
 	go func() {
 		for {
+			// if stats, ok := s.Status.Get(); ok == nil && stats == Running && len(s.items) > 0 {
 			if stats, ok := s.Status.Get(); ok == nil && stats == Running && len(s.items) > 0 {
-				skus := s.getSkus()
 
+				// skus := s.getSkus()
+				s.getSkus()
 				for key, item := range s.items {
-					status := skus[item.Store.StoreNumber+"."+item.Product.Code]
-
-					if status {
+					// status := skus[item.Store.StoreNumber+"."+item.Product.Code]
+					// fmt.Println(status)
+					fm := gjson.Parse(s.varfi)
+					// fmt.Println(key)
+					// fmt.Println(item)
+					// fmt.Println((item.Product.Code))
+					if fm.Get(item.Product.Code).Get("availability").Get("unlocked").Bool() {
 						s.UpdateStatus(key, StatusInStock)
-						s.openBrowser(s.model2Url(item.Product.Type, item.Product.Code))
+						// s.openBrowser(s.model2Url(item.Product.Type, item.Product.Code))
+						s.openBrowser("https://reserve-prime.apple.com/MO/zh_MO/reserve/A/availability")
 						dialog.ShowInformation("匹配成功", fmt.Sprintf("%s %s 有货", item.Store.CityStoreName, item.Product.Title), s.Window)
+						time.Sleep(time.Millisecond * 10000)
+
 					} else {
 						s.UpdateStatus(key, StatusOutStock)
 					}
@@ -140,9 +151,14 @@ func (s *listenService) getSkus() map[string]bool {
 	skus := map[string]bool{}
 	for _, code := range funk.UniqString(funk.Values(model.TypeCode).([]string)) {
 		stores := s.getSkuByCode(code)
+
 		for storeCode, result := range stores.Map() {
 			for productCode, availability := range result.Map() {
-				inStock := availability.Get("contract").Bool() && availability.Get("unlocked").Bool()
+				// inStock := availability.Get("contract").Bool() && availability.Get("unlocked").Bool()
+				inStock := availability.Get("unlocked").Bool()
+
+				s.varfi = result.String()
+
 				skus[storeCode+"."+productCode] = inStock
 			}
 		}
