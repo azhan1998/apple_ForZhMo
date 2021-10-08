@@ -116,10 +116,10 @@ func (s *listenService) Run() {
 					// fmt.Println((item.Product.Code))
 					if fm.Get(item.Product.Code).Get("availability").Get("unlocked").Bool() {
 						s.UpdateStatus(key, StatusInStock)
-						// s.openBrowser(s.model2Url(item.Product.Type, item.Product.Code))
-						s.openBrowser("https://reserve-prime.apple.com/MO/zh_MO/reserve/A/availability")
+						s.openBrowser(s.model2Url(item.Store.StoreNumber, item.Product.Code))
+						// s.openBrowser("https://reserve-prime.apple.com/MO/zh_MO/reserve/A/availability")
 						dialog.ShowInformation("匹配成功", fmt.Sprintf("%s %s 有货", item.Store.CityStoreName, item.Product.Title), s.Window)
-						time.Sleep(time.Millisecond * 10000)
+						time.Sleep(time.Millisecond * 15000)
 
 					} else {
 						s.UpdateStatus(key, StatusOutStock)
@@ -176,11 +176,11 @@ func (s *listenService) model2Url(productType string, partNumber string) string 
 	case "iphone13mini", "iphone13":
 		t = "iphone-13"
 	}
-
+	fmt.Println(t)
 	return fmt.Sprintf(
-		"https://www.apple.com/mo/shop/buy-iphone/%s/%s", //azhan_modify
-		//https://reserve-prime.apple.com/MO/zh_MO/reserve/A/availability?&store=R672&iUP=N&appleCare=N&rv=0&partNumber=MLH83ZA/A
-		t,
+		// "https://www.apple.com/mo/shop/buy-iphone/%s/%s", //azhan_modify
+		"https://reserve-prime.apple.com/MO/zh_MO/reserve/A/availability?&store=%s&iUP=N&appleCare=N&rv=0&partNumber=%s",
+		productType,
 		partNumber,
 	)
 }
