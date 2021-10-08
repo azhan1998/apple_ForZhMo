@@ -179,6 +179,7 @@ func (s *listenService) model2Url(productType string, partNumber string) string 
 
 	return fmt.Sprintf(
 		"https://www.apple.com/mo/shop/buy-iphone/%s/%s", //azhan_modify
+		//https://reserve-prime.apple.com/MO/zh_MO/reserve/A/availability?&store=R672&iUP=N&appleCare=N&rv=0&partNumber=MLH83ZA/A
 		t,
 		partNumber,
 	)
