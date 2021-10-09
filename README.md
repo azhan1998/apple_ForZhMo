@@ -1,5 +1,5 @@
 # Apple Store 预约助手
-
+## 本项目仅供学习使用
 ## iPhone13系列
 重构, 升级 [fyne](https://github.com/fyne-io/fyne) 至 2.0, 写起来的确比 1.0 舒服得多
 
@@ -65,10 +65,6 @@ fyne-cross windows
 效果预览
 ![效果预览](./images/0.png)
 
-注册码获取页面
-![注册码获取页面](./images/1.png)
 
-选择到店时间，填写身份证号
-![选择到店时间，填写身份证号](./images/2.png)
 
 
